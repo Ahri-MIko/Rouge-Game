@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class PlayerWalkingState : PlayerMoveMentState
+{
+    public PlayerWalkingState(PlayerMoveMentStateMachine mmsm) : base(mmsm)
+    {
+
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+        MoveMentStateMachine.player.animator.SetBool(AnimatorID.isWalking, true);
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        float currentHSpeed = MoveMentStateMachine.reusableData.currentHSpeed;
+
+        if (currentHSpeed == 0)
+        {
+            MoveMentStateMachine.ChangeState(MoveMentStateMachine.idlingState);
+        }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        MoveMentStateMachine.player.animator.SetBool(AnimatorID.isWalking, false);
+
+    }
+
+    protected override void OnDashStart(InputAction.CallbackContext obj)
+    {
+        MoveMentStateMachine.ChangeState(MoveMentStateMachine.dashState);
+    }
+}
