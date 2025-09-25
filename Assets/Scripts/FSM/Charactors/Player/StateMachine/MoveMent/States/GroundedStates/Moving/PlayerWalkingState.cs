@@ -22,6 +22,10 @@ public class PlayerWalkingState : PlayerMoveMentState
 
         float currentHSpeed = MoveMentStateMachine.reusableData.currentHSpeed;
 
+        if(IsGrounded() == false && IsFalling())
+        {
+            MoveMentStateMachine.ChangeState(MoveMentStateMachine.fallingState);
+        }
         if (currentHSpeed == 0)
         {
             MoveMentStateMachine.ChangeState(MoveMentStateMachine.idlingState);

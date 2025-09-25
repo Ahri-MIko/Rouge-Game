@@ -10,7 +10,10 @@ public class OnAnimationTranslation : StateMachineBehaviour
     {
         Idle,
         Walk,
-        Dash
+        Dash,
+        Jump,
+        ATK,
+        Null
     }
 
     [SerializeField] public OnEnterAnimationPlayerState onEnterAnimationState;

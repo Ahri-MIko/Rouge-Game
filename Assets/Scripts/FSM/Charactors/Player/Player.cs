@@ -8,16 +8,22 @@ public class Player : CharacterControllerBase
 {
     [Header("移动配置")]
     [SerializeField] private PlayerMoveReusableData moveData = new PlayerMoveReusableData();
+
+    [Header("攻击配置")]
+    [SerializeField] private PlayerComboReusableData comboData = new PlayerComboReusableData();
     
     public PlayerMoveMentStateMachine movemenStateMachine;
+    public PlayerComboStateMachine combomenStateMachine;
     
     // 提供对移动数据的访问
     public PlayerMoveReusableData MoveData => moveData;
+    public PlayerComboReusableData ComboData => comboData;
 
     protected override void Awake()
     {
         base.Awake();
         movemenStateMachine = new PlayerMoveMentStateMachine(this);
+        combomenStateMachine = new PlayerComboStateMachine(this);
     }
     void Start()
     {
@@ -30,6 +36,9 @@ public class Player : CharacterControllerBase
         base.Update();
         movemenStateMachine.HandInput();
         movemenStateMachine.Update();
+        combomenStateMachine.HandInput();
+        combomenStateMachine.Update();
+        
     }
 
 
@@ -53,6 +62,14 @@ public class Player : CharacterControllerBase
                 movemenStateMachine.OnAnimationTranslateEvent(movemenStateMachine.dashState);
                 break;
                 
+            case OnAnimationTranslation.OnEnterAnimationPlayerState.Jump:
+                // 切换到跳跃状态
+                movemenStateMachine.OnAnimationTranslateEvent(movemenStateMachine.jumpingState);
+                break;
+            case OnAnimationTranslation.OnEnterAnimationPlayerState.ATK:
+                // 切换到跳跃状态
+                movemenStateMachine.OnAnimationTranslateEvent(combomenStateMachine.normalAttackState);
+                break;
             default:
                 Debug.LogWarning($"未处理的动画状态: {playerState}");
                 break;
@@ -63,6 +80,8 @@ public class Player : CharacterControllerBase
     {
         // 通知当前状态机状态处理动画退出事件
         movemenStateMachine.OnAnimationExitEvent();
+
+        combomenStateMachine.OnAnimationExitEvent();
     }
 
     #endregion

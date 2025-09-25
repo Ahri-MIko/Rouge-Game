@@ -15,6 +15,11 @@ public class PlayerDashState : PlayerMoveMentState
         SetDashVelocity();
     }
 
+    protected override void HandleJumpInput()
+    {
+        //冲刺不允许跳跃
+    }
+
 
     public override void OnAnimationTranslateEvent(IState state)
     {
@@ -39,8 +44,11 @@ public class PlayerDashState : PlayerMoveMentState
             MoveMentStateMachine.player.rb2D.velocity = new Vector2(walkSpeed, MoveMentStateMachine.player.rb2D.velocity.y);
             reusableData.currentHSpeed = walkSpeed;
             reusableData.targetHSpeed = walkSpeed;
-            
-            MoveMentStateMachine.ChangeState(MoveMentStateMachine.walkingState);
+
+            if (IsGrounded() == false && IsFalling() == true)
+                MoveMentStateMachine.ChangeState(MoveMentStateMachine.fallingState);
+            else if(IsGrounded() == true)
+                MoveMentStateMachine.ChangeState(MoveMentStateMachine.walkingState);
         }
         else
         {
@@ -48,7 +56,10 @@ public class PlayerDashState : PlayerMoveMentState
             MoveMentStateMachine.reusableData.targetHSpeed = 0.0f;
             MoveMentStateMachine.player.rb2D.velocity = new Vector2(0, MoveMentStateMachine.player.rb2D.velocity.y);
             // 玩家没有移动输入，转入空闲状态
-            MoveMentStateMachine.ChangeState(MoveMentStateMachine.idlingState);
+            if (IsGrounded() == false && IsFalling() == true)
+                MoveMentStateMachine.ChangeState(MoveMentStateMachine.fallingState);
+            else if (IsGrounded() == true)
+                MoveMentStateMachine.ChangeState(MoveMentStateMachine.idlingState);
         }
     }
 
