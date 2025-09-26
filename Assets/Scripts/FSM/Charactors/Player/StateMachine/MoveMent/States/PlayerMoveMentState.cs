@@ -25,7 +25,7 @@ public class PlayerMoveMentState : IState
         RemoveInputActionCallBacks();
     }
 
-    public void HandInput()
+    public virtual void HandInput()
     {
         Vector2 moveInput = CharactorInputSystem.Instance.PlayerMove;
         InputX = moveInput.x;
@@ -202,7 +202,6 @@ public class PlayerMoveMentState : IState
 
     public virtual void OnAnimationTranslateEvent(IState state)
     {
-
     }
 
     #endregion
@@ -228,14 +227,13 @@ public class PlayerMoveMentState : IState
         CharactorInputSystem.Instance.inputActions.PlayerInput.Dash.started -= OnDashStart;
         CharactorInputSystem.Instance.inputActions.PlayerInput.Jump.started -= OnJumpStart;
         CharactorInputSystem.Instance.inputActions.PlayerInput.Jump.canceled -= OnJumpCanceled;
-        CharactorInputSystem.Instance.inputActions.PlayerInput.Attack.started += OnAttackStart;
+        CharactorInputSystem.Instance.inputActions.PlayerInput.Attack.started -= OnAttackStart;
 
 
     }
 
     protected virtual void OnDashStart(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-
     }
 
     protected virtual void OnJumpStart(UnityEngine.InputSystem.InputAction.CallbackContext obj)

@@ -22,7 +22,7 @@ public class PlayerWalkingState : PlayerMoveMentState
 
         float currentHSpeed = MoveMentStateMachine.reusableData.currentHSpeed;
 
-        if(IsGrounded() == false && IsFalling())
+        if (IsGrounded() == false && IsFalling())
         {
             MoveMentStateMachine.ChangeState(MoveMentStateMachine.fallingState);
         }
@@ -37,6 +37,11 @@ public class PlayerWalkingState : PlayerMoveMentState
         base.Exit();
         MoveMentStateMachine.player.animator.SetBool(AnimatorID.isWalking, false);
 
+    }
+
+    public override void OnAnimationTranslateEvent(IState state)
+    {
+        MoveMentStateMachine.ChangeState(state);
     }
 
     protected override void OnDashStart(InputAction.CallbackContext obj)

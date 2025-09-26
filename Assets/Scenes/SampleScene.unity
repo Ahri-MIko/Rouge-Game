@@ -712,7 +712,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.98, y: 1.23}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -776,7 +776,7 @@ MonoBehaviour:
   rb2D: {fileID: 0}
   animator: {fileID: 0}
   moveData:
-    DashSpeed: 10
+    DashSpeed: 2
     maxWalkSpeed: 5
     maxRunSpeed: 8
     acceleration: 30
@@ -796,6 +796,10 @@ MonoBehaviour:
     jumpPressTime: 0
     lastGroundedTime: 0
     lastJumpPressTime: -10
+  comboData:
+    InputY: 0
+  reusableData:
+    canInput: 1
 --- !u!61 &2095146762
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -833,7 +837,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.62, y: 1.23}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 0.98, y: 1.23}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0

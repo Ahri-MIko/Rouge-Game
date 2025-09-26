@@ -24,14 +24,15 @@ public class PlayerDashState : PlayerMoveMentState
     public override void OnAnimationTranslateEvent(IState state)
     {
         base.OnAnimationTranslateEvent(state);
+        MoveMentStateMachine.ChangeState(state);
     }
 
     public override void OnAnimationExitEvent()
     {
         base.OnAnimationExitEvent();
-        
+
         float inputX = MoveMentStateMachine.reusableData.InputX;
-        
+
         // 根据玩家当前输入决定下一个状态
         if (Mathf.Abs(inputX) > 0.01f)
         {
@@ -39,7 +40,7 @@ public class PlayerDashState : PlayerMoveMentState
             // 重要：立即将速度重置为合理的行走速度，避免从冲刺速度缓慢减速
             var reusableData = MoveMentStateMachine.reusableData;
             float walkSpeed = inputX * reusableData.maxWalkSpeed;
-            
+
             // 立即设置为行走速度，而不是让MoveToTargetSpeed慢慢减速
             MoveMentStateMachine.player.rb2D.velocity = new Vector2(walkSpeed, MoveMentStateMachine.player.rb2D.velocity.y);
             reusableData.currentHSpeed = walkSpeed;
@@ -47,7 +48,7 @@ public class PlayerDashState : PlayerMoveMentState
 
             if (IsGrounded() == false && IsFalling() == true)
                 MoveMentStateMachine.ChangeState(MoveMentStateMachine.fallingState);
-            else if(IsGrounded() == true)
+            else if (IsGrounded() == true)
                 MoveMentStateMachine.ChangeState(MoveMentStateMachine.walkingState);
         }
         else
@@ -112,4 +113,6 @@ public class PlayerDashState : PlayerMoveMentState
     public override void MoveToTargetSpeed()
     {
     }
+
+
 }

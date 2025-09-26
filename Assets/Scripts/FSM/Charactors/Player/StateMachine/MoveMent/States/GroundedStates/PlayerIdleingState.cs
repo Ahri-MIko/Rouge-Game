@@ -12,14 +12,14 @@ public class PlayerIdleingState : PlayerMoveMentState
     public override void Enter()
     {
         base.Enter();
-        
+
 
     }
     public override void Update()
     {
         base.Update();
 
-        if(MoveMentStateMachine.reusableData.InputX != 0)
+        if (MoveMentStateMachine.reusableData.InputX != 0)
         {
             MoveMentStateMachine.ChangeState(MoveMentStateMachine.walkingState);
         }
@@ -28,6 +28,5 @@ public class PlayerIdleingState : PlayerMoveMentState
     protected override void OnDashStart(InputAction.CallbackContext obj)
     {
         MoveMentStateMachine.ChangeState(MoveMentStateMachine.dashState);
-
     }
 }

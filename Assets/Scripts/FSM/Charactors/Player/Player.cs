@@ -11,6 +11,9 @@ public class Player : CharacterControllerBase
 
     [Header("攻击配置")]
     [SerializeField] private PlayerComboReusableData comboData = new PlayerComboReusableData();
+
+    [Header("玩家配置")]
+    [SerializeField]private PlayerReusableData reusableData = new PlayerReusableData();
     
     public PlayerMoveMentStateMachine movemenStateMachine;
     public PlayerComboStateMachine combomenStateMachine;
@@ -18,6 +21,8 @@ public class Player : CharacterControllerBase
     // 提供对移动数据的访问
     public PlayerMoveReusableData MoveData => moveData;
     public PlayerComboReusableData ComboData => comboData;
+
+    public PlayerReusableData ReusableData => reusableData;
 
     protected override void Awake()
     {
@@ -28,6 +33,7 @@ public class Player : CharacterControllerBase
     void Start()
     {
         movemenStateMachine.ChangeState(movemenStateMachine.idlingState);
+        combomenStateMachine.ChangeState(combomenStateMachine.NullState);
     }
 
     // Update is called once per frame
@@ -67,11 +73,11 @@ public class Player : CharacterControllerBase
                 movemenStateMachine.OnAnimationTranslateEvent(movemenStateMachine.jumpingState);
                 break;
             case OnAnimationTranslation.OnEnterAnimationPlayerState.ATK:
-                // 切换到跳跃状态
-                movemenStateMachine.OnAnimationTranslateEvent(combomenStateMachine.normalAttackState);
+                // 切换到攻击状态
+                combomenStateMachine.OnAnimationTranslateEvent(combomenStateMachine.normalAttackState);
+                movemenStateMachine.OnAnimationTranslateEvent(movemenStateMachine.moveNullState);
                 break;
             default:
-                Debug.LogWarning($"未处理的动画状态: {playerState}");
                 break;
         }
     }
@@ -84,5 +90,55 @@ public class Player : CharacterControllerBase
         combomenStateMachine.OnAnimationExitEvent();
     }
 
+    #endregion
+
+    #region 动画状态检测方法
+    
+    /// <summary>
+    /// 获取当前播放的动画名称
+    /// </summary>
+    /// <returns>当前动画名称</returns>
+    public string GetCurrentAnimationName()
+    {
+        return AnimationStateChecker.GetCurrentStateName(animator);
+    }
+    
+    /// <summary>
+    /// 检查是否正在播放指定动画
+    /// </summary>
+    /// <param name="animationName">动画名称</param>
+    /// <returns>是否正在播放</returns>
+    public bool IsPlayingAnimation(string animationName)
+    {
+        return AnimationStateChecker.IsPlayingAnimation(animator, animationName);
+    }
+    
+    /// <summary>
+    /// 获取当前动画播放进度
+    /// </summary>
+    /// <returns>播放进度(0-1)</returns>
+    public float GetAnimationProgress()
+    {
+        return AnimationStateChecker.GetCurrentAnimationProgress(animator);
+    }
+    
+    /// <summary>
+    /// 检查当前动画是否播放完成
+    /// </summary>
+    /// <returns>是否播放完成</returns>
+    public bool IsAnimationComplete()
+    {
+        return AnimationStateChecker.IsAnimationComplete(animator);
+    }
+    
+    /// <summary>
+    /// 获取详细的动画信息（用于调试）
+    /// </summary>
+    /// <returns>详细动画信息</returns>
+    public string GetDetailedAnimationInfo()
+    {
+        return AnimationStateChecker.GetDetailedAnimationInfo(animator);
+    }
+    
     #endregion
 }
