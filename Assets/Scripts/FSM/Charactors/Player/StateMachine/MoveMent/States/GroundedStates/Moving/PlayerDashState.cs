@@ -31,6 +31,8 @@ public class PlayerDashState : PlayerMoveMentState
     {
         base.OnAnimationExitEvent();
 
+        MoveMentStateMachine.player.animator.ResetTrigger(AnimatorID.isDash);
+
         float inputX = MoveMentStateMachine.reusableData.InputX;
 
         // 根据玩家当前输入决定下一个状态
