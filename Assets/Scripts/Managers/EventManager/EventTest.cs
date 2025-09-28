@@ -4,22 +4,45 @@ using UnityEngine;
 
 public class EventTest : MonoBehaviour
 {
+
+    [SerializeField]private float holdTime = 0.0f;
+    [SerializeField]private bool isPressed = false;
+    [SerializeField] private float maxholdTime = 0.1f;
     private void Awake()
     {
-        GameEventManager.Instance.AddEventListening("跳跃键按下", onJumpPressed);
-        GameEventManager.Instance.AddEventListening<Vector2>("移动键按下", onMovePressed);
+       
     }
 
     public void Update()
     {
-        if(CharactorInputSystem.Instance.Jump)
+        if (isPressed)
         {
-            GameEventManager.Instance.CallBack("跳跃键按下");
+            holdTime += Time.deltaTime;
+            if(holdTime > maxholdTime)
+            {
+                Debug.Log("正在蓄力了");
+            }
+        }
+        if (CharactorInputSystem.Instance.AttackWasPressedThisFrame)
+        {
+            holdTime += Time.deltaTime;
+            isPressed = true;
         }
 
-        if(CharactorInputSystem.Instance.PlayerMove != Vector2.zero)
+
+        if(CharactorInputSystem.Instance.AttackWasReleasedThisFrame)
         {
-            GameEventManager.Instance.CallBack("移动键按下", CharactorInputSystem.Instance.PlayerMove);
+            if(holdTime > maxholdTime)
+            {
+                Debug.Log("蓄力完成");
+            }
+            else
+            {
+                Debug.Log("短按完成");
+            }
+            holdTime = 0.0f;
+            isPressed= false;
+            
         }
     }
     public void onJumpPressed()

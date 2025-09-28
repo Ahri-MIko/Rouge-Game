@@ -211,7 +211,7 @@ public partial class @CharacterInputs: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""97fbc961-3b81-44b5-88ac-abb218c81135"",
                     ""path"": ""<Keyboard>/j"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold,Tap"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Attack"",

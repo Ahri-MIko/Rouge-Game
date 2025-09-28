@@ -105,6 +105,8 @@ public class PlayerAttackStateBase : IState
 
     private void OnAttackStart(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+        
+        // 其他情况下的正常攻击处理
         anim.SetTrigger(AnimatorID.Attack);
         if(CharactorComboBase.canComboInput())
         {

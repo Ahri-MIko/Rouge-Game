@@ -9,6 +9,8 @@ public class PlayerComboStateMachine : StateMachine
     public PlayerComboReusableData reusableData { get; }
 
     public PlayerNormalAttack normalAttackState { get; }
+    public PlayerChargeUpState chargeUpState { get; }
+    public PlayerChargeAttackState chargeAttackState { get; }
 
     public PlayerComboNullState NullState { get; }  
 
@@ -21,6 +23,8 @@ public class PlayerComboStateMachine : StateMachine
         reusableData = player.ComboData;
 
         normalAttackState = new PlayerNormalAttack(this);
+        chargeUpState = new PlayerChargeUpState(this);
+        chargeAttackState = new PlayerChargeAttackState(this);
 
         NullState = new PlayerComboNullState(this);
     }

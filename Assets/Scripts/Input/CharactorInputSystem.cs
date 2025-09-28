@@ -63,6 +63,7 @@ public class CharactorInputSystem : Singleton<CharactorInputSystem>
     {
         get => inputActions.PlayerInput.Attack.triggered;
     }
+
     
     public bool AttackPressed
     {

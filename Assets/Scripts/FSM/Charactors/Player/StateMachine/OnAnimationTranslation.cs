@@ -13,6 +13,8 @@ public class OnAnimationTranslation : StateMachineBehaviour
         Dash,
         Jump,
         ATK,
+        ChargeUp,      // 蓄力状态
+        ChargeAttack,  // 蓄力攻击状态
         Null
     }
 

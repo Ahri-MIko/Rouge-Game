@@ -74,9 +74,22 @@ public class Player : CharacterControllerBase
                 break;
             case OnAnimationTranslation.OnEnterAnimationPlayerState.ATK:
                 // 切换到攻击状态
-                combomenStateMachine.OnAnimationTranslateEvent(combomenStateMachine.normalAttackState);
                 movemenStateMachine.OnAnimationTranslateEvent(movemenStateMachine.moveNullState);
+                combomenStateMachine.OnAnimationTranslateEvent(combomenStateMachine.normalAttackState);
                 break;
+                
+            case OnAnimationTranslation.OnEnterAnimationPlayerState.ChargeUp:
+                // 切换到蓄力状态
+                movemenStateMachine.OnAnimationTranslateEvent(movemenStateMachine.moveNullState);
+                combomenStateMachine.OnAnimationTranslateEvent(combomenStateMachine.chargeUpState);
+                break;
+                
+            case OnAnimationTranslation.OnEnterAnimationPlayerState.ChargeAttack:
+                // 切换到蓄力攻击状态
+                movemenStateMachine.OnAnimationTranslateEvent(movemenStateMachine.moveNullState);
+                combomenStateMachine.OnAnimationTranslateEvent(combomenStateMachine.chargeAttackState);
+                break;
+                
             default:
                 break;
         }
