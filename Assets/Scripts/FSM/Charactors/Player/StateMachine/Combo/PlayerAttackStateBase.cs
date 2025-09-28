@@ -12,7 +12,7 @@ public class PlayerAttackStateBase : IState
     protected PlayerComboReusableData comboReusableData;
     protected Animator anim;
 
-    protected CharactorComboBase CharactorComboBase;
+    public CharactorComboBase CharactorComboBase;
 
 
     public PlayerAttackStateBase(PlayerComboStateMachine comboStateMachine )
@@ -73,6 +73,7 @@ public class PlayerAttackStateBase : IState
     public virtual void Update()
     {
         CharactorComboBase.UpdateComboAnimation();
+        CharactorComboBase.UpdateEnemys();
     }
 
     #endregion

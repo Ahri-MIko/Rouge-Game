@@ -152,6 +152,45 @@ public class Player : CharacterControllerBase
     {
         return AnimationStateChecker.GetDetailedAnimationInfo(animator);
     }
-    
+
     #endregion
+
+    #region Gizmos可视化
+
+    private void OnDrawGizmos()
+    {
+        // 检查是否启用可视化
+        if (!comboData.enableVisualization) return;
+        
+        if (transform == null) return;
+        
+        Vector2 playerPosition = transform.position;
+        Vector2 offset = comboData.detectionOffset;
+        
+        // 根据玩家朝向调整偏移
+        if (moveData != null && !moveData.facingRight)
+        {
+            offset.x = -offset.x;
+        }
+        
+        Vector2 detectionPosition = playerPosition + offset;
+        
+        // 设置Gizmos颜色
+        Gizmos.color = comboData.detectionColor;
+        
+        // 绘制检测圆形
+        Gizmos.DrawWireSphere(detectionPosition, comboData.detectionRadius);
+        
+        // 绘制半透明填充
+        Color fillColor = comboData.detectionColor;
+        fillColor.a = 0.2f;
+        Gizmos.color = fillColor;
+        Gizmos.DrawSphere(detectionPosition, comboData.detectionRadius);
+        
+        // 绘制从玩家到检测中心的连线
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, detectionPosition);
+    }
+
+#endregion
 }

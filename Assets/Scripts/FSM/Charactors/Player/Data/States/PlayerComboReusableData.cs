@@ -20,6 +20,14 @@ public class PlayerComboReusableData
     [Header("蓄力时数据 (只读)")]
     [SerializeField, ReadOnly] public float chargeTime = 0.0f; // 当前蓄力时间
 
+
+    [Header("敌人检测配置")]
+    [SerializeField] public float detectionRadius = 2.0f; // 检测半径
+    [SerializeField] public Vector2 detectionOffset = Vector2.right * 1.0f; // 检测偏移（相对于玩家朝向）
+    [SerializeField] public LayerMask enemyLayer = 1 << 6; // 敌人层级（假设敌人在第6层）
+    [SerializeField] public bool enableVisualization = true; // 是否启用可视化
+    [SerializeField] public Color detectionColor = Color.red; // 检测区域颜色
+
 }
 
   
